@@ -1,0 +1,32 @@
+.header-lbl {
+    margin: 5px;
+    font-size: 32px;
+}
+
+.header-btn {
+    margin-top: 8px !important;
+    text-align: right;
+}
+
+.right-align {
+    text-align: right;
+}
+
+.left-align {
+    text-align: left;
+}
+
+.studentPageGrid .MuiDataGrid-columnHeaderTitle {
+    font-weight: bold !important;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.CloseIcon {
+    cursor: pointer; 
+}
+

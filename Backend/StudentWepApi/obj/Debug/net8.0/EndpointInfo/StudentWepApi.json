@@ -1,0 +1,757 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "StudentWepApi",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Student/GetStudentList": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "parameters": [
+          {
+            "name": "searchText",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "showInactive",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/Student/GetSubjectCountList": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectCountResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/Student/UpdateStudent": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/Student/GetStudentDetails/{id}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentDetailsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/Student/UploadDocument": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/Student/DownloadDocument/{fileName}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CityResponse": {
+        "type": "object",
+        "properties": {
+          "cityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "cityName": {
+            "type": "string",
+            "nullable": true
+          },
+          "stateId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommonResponse": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StateResponse": {
+        "type": "object",
+        "properties": {
+          "stateId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "stateName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentDetailsResponse": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "stateList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StateResponse"
+            },
+            "nullable": true
+          },
+          "cityList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CityResponse"
+            },
+            "nullable": true
+          },
+          "subjectList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectResponse"
+            },
+            "nullable": true
+          },
+          "subjectWiseMarks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectWiseMarksResponse"
+            },
+            "nullable": true
+          },
+          "studentWiseDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentDocumentResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentDocumentRequest": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "documentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "indicator": {
+            "type": "string",
+            "nullable": true
+          },
+          "originalFileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousFileName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentDocumentResponse": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "documentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "originalFileName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentListResponse": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "stateName": {
+            "type": "string",
+            "nullable": true
+          },
+          "stateId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "cityName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "age": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "subjectWiseMarksList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectWiseMarksResponse"
+            },
+            "nullable": true
+          },
+          "studentWiseDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentDocumentResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentResponse": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentListResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentResponseForSubjectCount": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "stateName": {
+            "type": "string",
+            "nullable": true
+          },
+          "stateId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "cityName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "age": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "indicator": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "stateId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "cityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date"
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "subjectWiseMarks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectWiseMarksRequest"
+            },
+            "nullable": true
+          },
+          "studentDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentDocumentRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectCountResponse": {
+        "type": "object",
+        "properties": {
+          "subjectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentage": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "srfsc": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentResponseForSubjectCount"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectResponse": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "subjectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectWiseMarksRequest": {
+        "type": "object",
+        "properties": {
+          "marksId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "subjectId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "marks": {
+            "type": "number",
+            "format": "double"
+          },
+          "indicator": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectWiseMarksResponse": {
+        "type": "object",
+        "properties": {
+          "marksId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "subjectId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "subjectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "marks": {
+            "type": "number",
+            "format": "double"
+          },
+          "indicator": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
