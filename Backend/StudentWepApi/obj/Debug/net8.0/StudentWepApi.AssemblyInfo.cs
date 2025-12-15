@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StudentWepApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+470422b694a1df21de94cd1f14ed5bb38f0082e3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c365563380417ddb7e4675b12210cc217f341030")]
 [assembly: System.Reflection.AssemblyProductAttribute("StudentWepApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StudentWepApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
