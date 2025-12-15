@@ -20,7 +20,7 @@ namespace StudentWepApi.Controllers
         public StudentController(ILogger<StudentController> logger, IStudentDataAccess studentDataAccess)
         {
             _logger = logger;
-            _studentDataAccess = studentDataAccess; 
+            _studentDataAccess = studentDataAccess;
         }
 
 
